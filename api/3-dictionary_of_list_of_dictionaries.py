@@ -3,8 +3,8 @@
 Module documentation for retrieving data in JSON format.
 """
 
-import requests
 import json
+import requests
 
 URL_BASE = 'https://jsonplaceholder.typicode.com/users/'
 
