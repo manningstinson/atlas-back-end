@@ -35,4 +35,3 @@ if __name__ == "__main__":
 
     with open(f"{EMPLOYEE_ID}.json", "w") as file:
         json.dump(user_tasks, file)
-        
