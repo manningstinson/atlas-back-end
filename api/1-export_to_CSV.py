@@ -2,7 +2,7 @@
 """
 Module: export_to_CSV
 
-This module provides functionality to 
+This module provides functionality to
 export task data to a CSV file based on a given user ID.
 """
 
@@ -27,13 +27,17 @@ def export_to_csv(user_id):
     tasks = [task for task in data if task['userId'] == user_id]
 
     csv_filename = f"{user_id}.csv"
-    with open(csv_filename, mode='w', newline='') as csv_file:
-        fieldnames = ['USER_ID', 'USERNAME', 'TASK_COMPLETED_STATUS', 'TASK_TITLE']
-        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+    with open(csv_filename, 'w', newline='') as csv_file:
+        fieldnames = [
+            'USER_ID',
+            'USERNAME',
+            'TASK_COMPLETED_STATUS',
+            'TASK_TITLE'
+            ]
 
-        writer.writeheader()
-        for task in tasks:
-            writer.writerow({
+    writer.writeheader()
+    for task in tasks:
+        writer.writerow({
                 'USER_ID': task['userId'],
                 'USERNAME': data[0]['username'],
                 'TASK_COMPLETED_STATUS': str(task['completed']),
