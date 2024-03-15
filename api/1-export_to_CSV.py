@@ -1,10 +1,26 @@
 #!/usr/bin/python3
+"""
+Module: export_to_CSV
+
+This module provides functionality to 
+export task data to a CSV file based on a given user ID.
+"""
+
 import csv
 import json
 import sys
 
 
 def export_to_csv(user_id):
+    """
+    Export tasks belonging to the specified user to a CSV file.
+
+    Args:
+        user_id (int): The ID of the user whose tasks are to be exported.
+
+    Returns:
+        None
+    """
     with open('todos.json') as json_file:
         data = json.load(json_file)
 
