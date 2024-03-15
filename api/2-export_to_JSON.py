@@ -18,20 +18,25 @@ if __name__ == "__main__":
         f"{API_URL}/users/{EMPLOYEE_ID}/todos",
         params={"_expand": "user"}
     )
-    data = response.json()
 
-    if not len(data):
-        print("RequestError:", 404)
+    if response.status_code != 200:
+        print(f"RequestError: {response.status_code}")
         sys.exit(1)
 
-    user_tasks = {EMPLOYEE_ID: []}
+    data = response.json()
+
+    if not data:
+        print(f"No tasks found for user ID {EMPLOYEE_ID}")
+        sys.exit(1)
+
+    user_tasks = []
     for task in data:
         task_dict = {
             "task": task["title"],
             "completed": task["completed"],
             "username": task["user"]["username"]
         }
-        user_tasks[EMPLOYEE_ID].append(task_dict)
+        user_tasks.append(task_dict)
 
     with open(f"{EMPLOYEE_ID}.json", "w") as file:
         json.dump(user_tasks, file)
