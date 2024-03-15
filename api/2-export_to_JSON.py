@@ -3,11 +3,12 @@
 Export data from an API endpoint to JSON format.
 """
 
-import sys
 import json
 import requests
+import sys
 
 BASE_URL = 'https://jsonplaceholder.typicode.com/users/'
+
 
 def export_to_json(user_id):
     """
@@ -41,6 +42,7 @@ def export_to_json(user_id):
     output_filename = f"{user_id}.json"
     with open(output_filename, 'w') as file:
         json.dump({str(user_id): tasks}, file, indent=4)
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
