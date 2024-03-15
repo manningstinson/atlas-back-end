@@ -38,5 +38,9 @@ if __name__ == "__main__":
         }
         user_tasks.append(task_dict)
 
-    with open(f"{EMPLOYEE_ID}.json", "w") as file:
-        json.dump(user_tasks, file)
+    try:
+        with open(f"{EMPLOYEE_ID}.json", "w") as file:
+            json.dump(user_tasks, file)
+        print("JSON export successful.")
+    except Exception as e:
+        print(f"Error occurred while exporting JSON: {e}")
