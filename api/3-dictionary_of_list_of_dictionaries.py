@@ -1,54 +1,37 @@
 #!/usr/bin/python3
-
 """
-This script organizes tasks from all
-employees into a dictionary of lists of dictionaries
-and exports the data in JSON format.
+Module documentation for a retrieve data in JSON format
 """
 
-import json
+from sys import argv
+from requests import get
+from json import dump
+
+url_base = 'https://jsonplaceholder.typicode.com/users/'
 
 
-def organize_tasks(data):
-    """
-    Organizes tasks from all employees into a
-    dictionary of lists of dictionaries.
+def dict_of_the_dict():
+    """s"""
+    users = get(url_base).json()
+    retrieve_json = dict()
 
-    Args:
-        data (list): A list of dictionaries containing task data.
+    for user in users:
+        usr_id = user['id']
+        item_data = []
+        task_users = get(url_base + str(usr_id) + '/todos/').json()
 
-    Returns:
-        dict: A dictionary where keys are
-        user IDs and values are lists of dictionaries
-        containing task information.
-    """
-    organized_data = {}
-    for record in data:
-        user_id = record['userId']
-        task_info = {
-            "username": record['username'],
-            "task": record['title'],
-            "completed": record['completed']
-        }
-        if user_id in organized_data:
-            organized_data[user_id].append(task_info)
-        else:
-            organized_data[user_id] = [task_info]
-    return organized_data
+        for todo in task_users:
+            item_dict = {
+                'task': todo['title'],
+                'completed': todo['completed'],
+                'username': user['username']
+            }
+            item_data.append(item_dict)
+        retrieve_json[usr_id] = item_data
+
+    with open('todo_all_employees.json', 'w', encoding='utf-8') as file_json:
+        dump(retrieve_json, file_json)
 
 
-def main():
-    """
-    Main function to read, organize, and export task data.
-    """
-    with open('todo_all_employees.json', 'r') as file:
-        data = json.load(file)
-
-    organized_data = organize_tasks(data)
-
-    with open('todo_all_employees.json', 'w') as file:
-        json.dump(organized_data, file, indent=4)
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    dict_of_the_dict()
